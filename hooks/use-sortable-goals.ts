@@ -38,8 +38,8 @@ export function useSortableGoals({
       animation: 200,
       ghostClass: 'opacity-50',
       dragClass: 'opacity-50',
-      handle: '.drag-handle', // Only drag from this class
-      filter: 'button,input,[data-no-drag]', // Don't drag these
+      // No handle restriction - allow dragging from entire card except filtered elements
+      filter: 'button,input,[data-no-drag]', // Don't drag from buttons, inputs, or marked elements
       forceFallback: false, // Use native drag when possible
       dataIdAttr: 'data-id',
 
