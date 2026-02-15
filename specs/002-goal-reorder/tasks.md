@@ -40,18 +40,18 @@ This tasks document breaks down the Goal Reordering feature into 7 implementatio
 
 ### Setup Tasks
 
-- [ ] T001 Install Sortable.js and type definitions in package.json
+- [x] T001 Install Sortable.js and type definitions in package.json
   - Run: `npm install sortable @types/sortable --save`
   - Update `package.json` with pinned versions
   - Verify: `npm list sortable` shows installed version
 
-- [ ] T002 Update Constitution from v1.0.0 to v1.1.0 in `.specify/memory/constitution.md`
+- [x] T002 Update Constitution from v1.0.0 to v1.1.0 in `.specify/memory/constitution.md`
   - Add Sortable.js to "Locked versions" section with version pin
   - Update version line: `**Version**: 1.1.0`
   - Add amendment footer documenting this change
   - File: [.specify/memory/constitution.md](.specify/memory/constitution.md)
 
-- [ ] T003 [P] Add Sortable.js to gitignore exclusions if needed
+- [x] T003 [P] Add Sortable.js to gitignore exclusions if needed
   - Verify `node_modules/` is in `.gitignore`
   - Ensure `package-lock.json` is committed for version consistency
 
@@ -68,7 +68,7 @@ This tasks document breaks down the Goal Reordering feature into 7 implementatio
 
 ### Foundational Tasks
 
-- [ ] T004 [P] Create GoalOrderService in `app/lib/services/goal-order-service.ts`
+- [x] T004 [P] Create GoalOrderService in `app/lib/services/goal-order-service.ts`
   - Implement `reorderGoalsInColumn()` - move goal to new position within column
   - Implement `getGoalsInStatus()` - return goals filtered and sorted by order
   - Implement `completeGoal()` - move goal to completed with new order value
@@ -78,7 +78,7 @@ This tasks document breaks down the Goal Reordering feature into 7 implementatio
   - Per contract: [specs/002-goal-reorder/contracts/component-service-interfaces.md](contracts/component-service-interfaces.md)
   - Code example: [specs/002-goal-reorder/quickstart.md](quickstart.md) (Step 2)
 
-- [ ] T005 [P] Create GoalStorageService in `app/lib/services/goal-storage-service.ts`
+- [x] T005 [P] Create GoalStorageService in `app/lib/services/goal-storage-service.ts`
   - Implement `loadGoals()` - load from localStorage, auto-migrate order property
   - Implement `saveGoals()` - persist to localStorage, emit custom event
   - Implement `onStorageChange()` - subscribe to cross-tab storage events
@@ -88,7 +88,7 @@ This tasks document breaks down the Goal Reordering feature into 7 implementatio
   - Per contract: [specs/002-goal-reorder/contracts/component-service-interfaces.md](contracts/component-service-interfaces.md)
   - Code example: [specs/002-goal-reorder/quickstart.md](quickstart.md) (Step 3)
 
-- [ ] T006 [P] Create useSortableGoals hook in `app/hooks/use-sortable-goals.ts`
+- [x] T006 [P] Create useSortableGoals hook in `app/hooks/use-sortable-goals.ts`
   - Initialize Sortable.js instance in useEffect with config (handle, ghostClass, callbacks)
   - Manage isDragging state for visual feedback
   - Call `GoalOrderService.reorderGoalsInColumn()` on drag end
@@ -97,7 +97,7 @@ This tasks document breaks down the Goal Reordering feature into 7 implementatio
   - Per contract: [specs/002-goal-reorder/contracts/component-service-interfaces.md](contracts/component-service-interfaces.md)
   - Code example: [specs/002-goal-reorder/quickstart.md](quickstart.md) (Step 4)
 
-- [ ] T007 [P] Create useGoalCrossSyncStorage hook in `app/hooks/use-goal-cross-sync-storage.ts`
+- [x] T007 [P] Create useGoalCrossSyncStorage hook in `app/hooks/use-goal-cross-sync-storage.ts`
   - Subscribe to storage changes via `GoalStorageService.onStorageChange()`
   - Call onGoalsChange callback when storage updates detected
   - Cleanup event listeners on unmount
@@ -105,7 +105,7 @@ This tasks document breaks down the Goal Reordering feature into 7 implementatio
   - Per contract: [specs/002-goal-reorder/contracts/component-service-interfaces.md](contracts/component-service-interfaces.md)
   - Code example: [specs/002-goal-reorder/quickstart.md](quickstart.md) (Step 5)
 
-- [ ] T008 Extend Goal model with order property in `app/lib/models/goal.ts`
+- [x] T008 Extend Goal model with order property in `app/lib/models/goal.ts`
   - Add `order: number` field to Goal interface
   - Add validation: order >= 0
   - Update goal creation helper to set initial order
@@ -133,14 +133,14 @@ This tasks document breaks down the Goal Reordering feature into 7 implementatio
 
 ### User Story 1 Tasks
 
-- [ ] T009 [US1] Update GoalCard component to support draggable state in `app/components/goal-card.tsx`
+- [x] T009 [US1] Update GoalCard component to support draggable state in `app/components/goal-card.tsx`
   - Add isDragging prop to GoalCardProps
   - Apply `opacity-50` conditional class when isDragging true
   - Add `data-id={goal.id}` attribute for Sortable.js identification
   - Ensure buttons have `pointer-events: auto` to stay clickable
   - File: [app/components/goal-card.tsx](app/components/goal-card.tsx)
 
-- [ ] T010 [US1] Create GoalColumn component with Sortable.js integration in `app/components/goal-column.tsx`
+- [x] T010 [US1] Create GoalColumn component with Sortable.js integration in `app/components/goal-column.tsx`
   - New component that wraps a list of goals with Sortable.js
   - Use useSortableGoals hook to initialize Sortable instance
   - Pass sortableRef to `<ul class="sortable-list">`
@@ -152,7 +152,7 @@ This tasks document breaks down the Goal Reordering feature into 7 implementatio
   - Per contract: [specs/002-goal-reorder/contracts/component-service-interfaces.md](contracts/component-service-interfaces.md)
   - Code example: [specs/002-goal-reorder/quickstart.md](quickstart.md) (Step 6)
 
-- [ ] T011 [US1] Update GoalDashboard component to use new GoalColumn in `app/components/goal-dashboard.tsx`
+- [x] T011 [US1] Update GoalDashboard component to use new GoalColumn in `app/components/goal-dashboard.tsx`
   - Replace old goal rendering with two `<GoalColumn>` instances (active + completed)
   - Manage goals state with useState
   - Load goals on mount from GoalStorageService.loadGoals()
@@ -163,7 +163,7 @@ This tasks document breaks down the Goal Reordering feature into 7 implementatio
   - Per contract: [specs/002-goal-reorder/contracts/component-service-interfaces.md](contracts/component-service-interfaces.md)
   - Code example: [specs/002-goal-reorder/quickstart.md](quickstart.md) (Step 7)
 
-- [ ] T012 [US1] Add Tailwind CSS classes for drag-and-drop styling in `app/globals.css`
+- [x] T012 [US1] Add Tailwind CSS classes for drag-and-drop styling in `app/globals.css`
   - `.drag-handle { @apply cursor-grab; }`
   - `.drag-handle:active { @apply cursor-grabbing; }`
   - `.sortable-ghost { @apply opacity-50; }` (Sortable.js class)
@@ -171,7 +171,7 @@ This tasks document breaks down the Goal Reordering feature into 7 implementatio
   - `.goal-list { @apply space-y-2 list-none; }`
   - File: [app/globals.css](app/globals.css)
 
-- [ ] T013 [US1] Test drag-and-drop in active goals column via `npm run dev`
+- [x] T013 [US1] Test drag-and-drop in active goals column via `npm run dev`
   - Open http://localhost:3000
   - Add 3-4 active goals
   - Drag first goal to last position → verify goal moves, order updates
@@ -200,31 +200,31 @@ This tasks document breaks down the Goal Reordering feature into 7 implementatio
 
 ### User Story 3 Tasks
 
-- [ ] T014 [P] [US3] Update GoalColumn to display drop indicator during drag in `app/components/goal-column.tsx`
+- [x] T014 [P] [US3] Update GoalColumn to display drop indicator during drag in `app/components/goal-column.tsx`
   - Add state to track hover position during drag (dropIndex)
   - Render `<li class="drop-indicator">` at appropriate index while dragging
   - Drop indicator: horizontal line with Tailwind classes
   - Hide indicator when not dragging
   - Update position as Sortable reports dragover events (if needed via Sortable callbacks)
 
-- [ ] T015 [US3] Add drop indicator styling to `app/globals.css`
+- [x] T015 [US3] Add drop indicator styling to `app/globals.css`
   - `.drop-indicator { @apply border-t-2 border-blue-400 my-2; }`
   - `.drop-indicator::before { content: ""; @apply block h-0; }` (if spacing needed)
   - Ensure indicator is 1-2px thick, clearly visible
 
-- [ ] T016 [US3] Verify cursor changes in GoalCard on hover in `app/components/goal-card.tsx`
+- [x] T016 [US3] Verify cursor changes in GoalCard on hover in `app/components/goal-card.tsx`
   - Ensure parent `<div>` has `className="cursor-grab"`
   - Add Tailwind class: `@apply cursor-grab`
   - During drag, Sortable.js automatically applies cursor-grabbing (via useSortableGoals)
   - Test: hover over goal → grab cursor appears
 
-- [ ] T017 [US3] Verify ghosted appearance via Sortable.js config in `app/hooks/use-sortable-goals.ts`
+- [x] T017 [US3] Verify ghosted appearance via Sortable.js config in `app/hooks/use-sortable-goals.ts`
   - Config already sets `ghostClass: 'opacity-50'` in Sortable options
   - Verify GoalCard applies this class conditionally via isDragging prop
   - Tailwind will apply opacity automatically via Sortable.js class manipulation
   - Test: drag goal → goal becomes semi-transparent during drag
 
-- [ ] T018 [US3] Test visual feedback via `npm run dev`
+- [x] T018 [US3] Test visual feedback via `npm run dev`
   - Open http://localhost:3000, add goals
   - Hover over goal → cursor changes to grab
   - Click and drag goal → cursor changes to grabbing
