@@ -150,7 +150,7 @@ When a user clicks and holds directly on interactive elements (checkbox, delete 
 - Users have browsers supporting modern drag-and-drop APIs or equivalent touch-drag interactions
 - Goal order is stored locally in browser storage and does not require backend sync for MVP
 - Drag-and-drop reordering is scoped to within-column reordering only (active goals in active column only; completed goals in completed column only)
-- Browser tab isolation is acceptable for MVP; reordering in one tab does not sync across other tabs in real-time
+- Goal order syncs across multiple browser tabs of the same user via localStorage events; no backend sync required for cross-tab communication
 - Each status (active, completed) maintains its own independent ordering; no cross-column dragging in MVP
 - Visual feedback patterns follow modern web app conventions (semi-transparency for dragged items, insertion indicators, cursor changes)
 - Touch gesture support (e.g., on mobile) uses platform-appropriate patterns (e.g., long-press to initiate drag)
