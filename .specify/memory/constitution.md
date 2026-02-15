@@ -61,6 +61,7 @@ Locked versions from package.json:
 - **Tailwind CSS**: v4 (styling engine)
 - **TypeScript**: ^5 (type safety)
 - **ESLint**: ^9 (linting)
+- **Sortable.js**: 1.15.7 (drag-and-drop interactions, added v1.1.0)
 
 All dependencies beyond these core libraries require constitution amendment to add.
 
@@ -75,4 +76,12 @@ All dependencies beyond these core libraries require constitution amendment to a
 
 **Compliance Verification**: All code changes must be reviewed against these four principles and the no-testing constraint.
 
-**Version**: 1.0.0 | **Ratified**: 2026-02-14 | **Last Amended**: 2026-02-14
+**Version**: 1.1.0 | **Ratified**: 2026-02-14 | **Last Amended**: 2026-02-15
+
+## Amendment Log
+
+### v1.0.0 → v1.1.0 (2026-02-15)
+**Type**: MINOR (new technology stack addition)  
+**Change**: Added Sortable.js 1.15.7 to locked dependency list  
+**Justification**: Required for drag-and-drop functionality in goal reordering feature (002-goal-reorder). Sortable.js provides robust, accessible drag-and-drop with 60fps performance and cross-browser support. Preferred over native HTML5 drag-and-drop API due to complexity reduction and UX/accessibility improvements.  
+**Impact**: Future features may use Sortable.js for similar drag-and-drop interactions across the project.
