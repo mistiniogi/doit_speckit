@@ -371,7 +371,7 @@ This tasks document breaks down the Goal Reordering feature into 7 implementatio
 
 ### Keyboard Accessibility Tasks
 
-- [ ] T025 [P] [FR-010] Add keyboard accessibility for drag-and-drop in `app/hooks/use-sortable-goals.ts`
+- [x] T025 [P] [FR-010] Add keyboard accessibility for drag-and-drop in `app/hooks/use-sortable-goals.ts`
   - Enable Sortable.js keyboard support: `forceFallback: true` for full keyboard drag handling
   - Document keyboard shortcuts: Focus goal → Space/Enter to enter drag mode → Arrow keys to reorder → Enter to confirm, Escape to cancel
   - Implement custom keyboard handler that maps keys to Sortable.js drag actions
@@ -380,7 +380,7 @@ This tasks document breaks down the Goal Reordering feature into 7 implementatio
   - File: [app/hooks/use-sortable-goals.ts](app/hooks/use-sortable-goals.ts)
   - Per FR-010: keyboard accessibility required for all users
 
-- [ ] T025b [P] [FR-010] Test keyboard accessibility for drag-and-drop via `npm run dev`
+- [x] T025b [P] [FR-010] Test keyboard accessibility for drag-and-drop via `npm run dev`
   - Open app with goals visible
   - Tab navigation: Press Tab repeatedly until focus lands on a goal card
   - Verify: Goal card receives visual focus indicator (border or outline)
@@ -400,44 +400,44 @@ This tasks document breaks down the Goal Reordering feature into 7 implementatio
 
 ### Polish Tasks
 
-- [ ] T026 [P] Test responsive design across viewports
+- [x] T026 [P] Test responsive design across viewports
   - Mobile (375px): GoalColumn should stack or use single-column layout
   - Tablet (768px): Two columns visible side-by-side
   - Desktop (1024px+): Full two-column layout with good spacing
   - Test drag-and-drop works on all sizes via `npm run dev`
 
-- [ ] T027 [P] Add error handling for localStorage failures in `app/lib/services/goal-storage-service.ts`
+- [x] T027 [P] Add error handling for localStorage failures in `app/lib/services/goal-storage-service.ts`
   - Wrap localStorage access in try-catch
   - Log errors to console (visible during `npm run dev`)
   - Fallback: in-memory goals if localStorage fails
   - Notify user if save failed (optional UI, low priority for MVP)
   - File: [app/lib/services/goal-storage-service.ts](app/lib/services/goal-storage-service.ts)
 
-- [ ] T028 [P] Validate data integrity on load in `app/lib/services/goal-storage-service.ts`
+- [x] T028 [P] Validate data integrity on load in `app/lib/services/goal-storage-service.ts`
   - Call `GoalOrderService.validateGoalOrder()` on each status group
   - Call `GoalOrderService.repairGoalOrder()` if validation fails
   - Prevents corrupted order from breaking UI
   - Silent repair is acceptable for MVP
 
-- [ ] T029 Test cross-tab synchronization via `npm run dev`
+- [x] T029 Test cross-tab synchronization via `npm run dev`
   - Open app in two browser tabs
   - Make changes (add/complete/reorder) in Tab 1
   - Verify Tab 2 updates automatically via storage events
   - Test radio buttons or other controls work across tabs
 
-- [ ] T030 Verify no console errors
+- [x] T030 Verify no console errors
   - Open http://localhost:3000 with DevTools console open (F12)
   - Perform all dragging operations
   - Manual verification: no red error messages
   - Verify all tasks completed successfully
 
-- [ ] T031 Code review: Verify all implementations match contracts in `app/components/goal-*.tsx` and `app/lib/services/*.ts`
+- [x] T031 Code review: Verify all implementations match contracts in `app/components/goal-*.tsx` and `app/lib/services/*.ts`
   - Check component props match GoalColumnProps, DraggableGoalCardProps
   - Check service functions match GoalOrderService, GoalStorageService contracts
   - Check hook signatures match useSortableGoals, useGoalCrossSyncStorage
   - Refer to: [specs/002-goal-reorder/contracts/component-service-interfaces.md](contracts/component-service-interfaces.md)
 
-- [ ] T032 Update or create README/CHANGELOG with feature completion notes
+- [x] T032 Update or create README/CHANGELOG with feature completion notes
   - Document Sortable.js installation
   - List new components: GoalColumn, updated GoalCard, updated GoalDashboard
   - List new services: GoalOrderService, GoalStorageService
