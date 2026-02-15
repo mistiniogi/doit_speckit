@@ -107,8 +107,8 @@ When a user clicks and holds directly on interactive elements (checkbox, delete 
 - **FR-001**: System MUST support drag-and-drop interaction for goal cards within the active goals column, allowing users to reorder goals by dragging them above or below other goals
 - **FR-002**: System MUST support drag-and-drop interaction for goal cards within the completed goals column with the same behavior as active goals
 - **FR-003**: System MUST display a visual drop indicator (horizontal line, highlighted insertion point, or similar) during drag operations to show where the goal will be placed when dropped
-- **FR-004**: System MUST apply semi-transparent or ghosted styling to a goal card that is currently being dragged to visually distinguish it from stationary goals
-- **FR-005**: System MUST change the cursor style to "grab" when hovering over a draggable goal area and to "grabbing" during an active drag operation
+- **FR-004**: System MUST apply semi-transparent or ghosted styling to a goal card that is currently being dragged to visually distinguish it from stationary goals. **Specification**: Dragged goal opacity must be **50%** (CSS: `opacity: 0.5`; Tailwind: `.opacity-50`)
+- **FR-005**: System MUST change the cursor style to "grab" when hovering over a draggable goal area and to "grabbing" during an active drag operation. **Specification**: CSS cursor values are `cursor: grab` (hover state) and `cursor: grabbing` (during drag). Tailwind CSS classes: `.cursor-grab` (hover) and `.cursor-grabbing` (drag state)
 - **FR-006**: System MUST prevent drag initiation when the user clicks and holds on interactive elements (checkboxes, delete buttons); drag MUST only initiate when the user clicks neutral areas or a dedicated drag handle
 - **FR-007**: System MUST persist the new goal order to browser storage immediately upon drop completion so the reordered list survives page refresh
 - **FR-008**: System MUST cancel any in-progress drag operation if the goal's status changes (e.g., when a goal is completed/deleted during dragging)

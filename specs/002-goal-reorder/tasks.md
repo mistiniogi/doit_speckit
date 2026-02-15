@@ -234,6 +234,54 @@ This tasks document breaks down the Goal Reordering feature into 7 implementatio
 
 ---
 
+## Phase 4.5: Auto-Scroll Handling [P1 - User Story 1 + Edge Case]
+
+**Requirement**: FR-012 - When a user drags a goal near the edge of a scrollable goals column, the system MUST auto-scroll the column to allow the user to drop the goal in areas that may be off-screen.
+
+**Independent Test Criteria**:
+- Add 15+ goals to create a scrollable column
+- Drag goal and move cursor within 50px of top edge → column scrolls up
+- Drag goal and move cursor within 50px of bottom edge → column scrolls down
+- Dragged goal remains visible during auto-scroll
+- Scroll acceleration increases as cursor gets closer to edge
+- Release goal while auto-scrolling → goal drops at correct position in scrolled area
+
+**Acceptance Criteria** (from spec FR-012):
+1. ✅ Dragging goal near column edge triggers auto-scroll
+2. ✅ Auto-scroll allows dropping goals in off-screen areas
+3. ✅ Dragged goal visibility maintained during scroll
+4. ✅ Performance remains smooth (no jank during scroll + drag)
+
+### Auto-Scroll Tasks
+
+- [ ] T018a [US1] Implement auto-scroll behavior in GoalColumn component in `app/components/goal-column.tsx`
+  - Detect when dragged goal is within 50px of column top/bottom edges
+  - Trigger auto-scroll with acceleration: base 10px + additional based on proximity
+  - Scroll speed increases as cursor approaches edge (e.g., 5px/100ms at 50px distance, 15px/100ms at edge)
+  - Max scroll: 20px per 100ms to prevent overshooting
+  - Use `scrollIntoView()` or manual `scrollTop` adjustment
+  - Stop scrolling when drag ends or cursor moves away from edge
+  - File: [app/components/goal-column.tsx](app/components/goal-column.tsx)
+
+- [ ] T018b [US1] Enhance useSortableGoals hook to support edge-based scroll detection in `app/hooks/use-sortable-goals.ts`
+  - Add dragover/dragmove callback to determine cursor proximity to edges
+  - Calculate onDragOver: distance from cursor to column edges
+  - Trigger parent scroll action if within threshold (50px)
+  - Return scroll state to caller (GoalColumn)
+  - Pass scroll handler to Sortable.js config
+  - File: [app/hooks/use-sortable-goals.ts](app/hooks/use-sortable-goals.ts)
+
+- [ ] T018c [US1] Test auto-scroll behavior via `npm run dev`
+  - Add 15-20 goals to create scrollable column
+  - Drag goal from position 1
+  - Move dragged goal to within 50px of top edge → verify column scrolls up
+  - Move to within 50px of bottom edge → verify column scrolls down
+  - Drag goal to off-screen position (e.g., position 20 near bottom) and drop
+  - Verify dropped goal appears in correct position after scroll
+  - Verify no jank or performance degradation during scroll + drag
+
+---
+
 ## Phase 5: Completed Goals Column Reordering [P2 - User Story 2]
 
 **User Story 2 Goal**: As a user, I want to reorder my completed goals by dragging them in the completed column so I can organize them by completion date, difficulty, or any other personal preference.
@@ -304,19 +352,53 @@ This tasks document breaks down the Goal Reordering feature into 7 implementatio
   - Goal title area: click and drag → drag operation initiates
   - Test mouse and touch (if device available)
 
+- [ ] T024a [FR-008] Test drag cancellation when goal status changes during drag in `npm run dev`
+  - Start dragging a goal from active column
+  - While dragging, use a second browser tab or DevTools to mark the goal complete
+  - Verify: In-progress drag operation is cancelled automatically
+  - Verify: Goal moves to completed column (status change processed)
+  - Verify: Dragged goal does NOT appear in old position; appears in correct new location
+  - Verify: No UI errors or console warnings
+  - Per FR-008: "System MUST cancel any in-progress drag operation if the goal's status changes"
+
+---
+
+## Phase 4.25: Keyboard Accessibility [P1 - User Story 3 + Accessibility]
+
+**Requirement**: FR-010 - The system MUST support keyboard accessibility for drag-and-drop operations using standard patterns.
+
+**NOTE**: Moved from Phase 7 (Polish) to Phase 4 because FR-010 is a MANDATORY feature (MUST), not a polish item. Accessibility must be part of core feature implementation, not deferred.
+
+### Keyboard Accessibility Tasks
+
+- [ ] T025 [P] [FR-010] Add keyboard accessibility for drag-and-drop in `app/hooks/use-sortable-goals.ts`
+  - Enable Sortable.js keyboard support: `forceFallback: true` for full keyboard drag handling
+  - Document keyboard shortcuts: Focus goal → Space/Enter to enter drag mode → Arrow keys to reorder → Enter to confirm, Escape to cancel
+  - Implement custom keyboard handler that maps keys to Sortable.js drag actions
+  - Ensure goal cards are keyboard-focusable (tab navigation works)
+  - Test: Tab to goal → Space key enters drag mode → Arrow keys move goal → Enter drops at new position
+  - File: [app/hooks/use-sortable-goals.ts](app/hooks/use-sortable-goals.ts)
+  - Per FR-010: keyboard accessibility required for all users
+
+- [ ] T025b [P] [FR-010] Test keyboard accessibility for drag-and-drop via `npm run dev`
+  - Open app with goals visible
+  - Tab navigation: Press Tab repeatedly until focus lands on a goal card
+  - Verify: Goal card receives visual focus indicator (border or outline)
+  - Press Space or Enter: Verify drag mode activates (visual feedback)
+  - Use Arrow keys (Up/Down): Verify goal moves up/down in column
+  - Press Enter: Verify goal drops at new position
+  - Press Escape: Verify drag mode cancels, goal returns to original position
+  - Test in multiple browsers (Chrome, Firefox, Safari)
+  - Test with screen reader (NVDA or JAWS) if available
+  - Per SC-008: "Keyboard accessibility (focus, Space/Enter, arrow keys) allows keyboard-only users to reorder goals without using mouse/touch"
+
 ---
 
 ## Phase 7: Polish & Cross-Cutting Concerns
 
-**Goal**: Ensure accessibility, responsive design, error handling, and cross-browser compatibility.
+**Goal**: Ensure responsive design, error handling, data validation, and cross-browser compatibility.
 
 ### Polish Tasks
-
-- [ ] T025 [P] Add keyboard accessibility for drag-and-drop in `app/hooks/use-sortable-goals.ts`
-  - Document keyboard shortcuts (if Sortable.js provides fallback)
-  - Sortable.js `forceFallback: true` enables keyboard support on touch
-  - Test tab navigation to goal → can users reach drag handle via keyboard?
-  - Per FR-010: keyboard accessibility required
 
 - [ ] T026 [P] Test responsive design across viewports
   - Mobile (375px): GoalColumn should stack or use single-column layout
@@ -403,8 +485,22 @@ Phase 6 (US4: Drag Prevention)
     ├─→ T023: Mark interactive elements
     └─→ T024: Manual test
 
+Phase 4.25 (Keyboard Accessibility - moved from Phase 7)
+    ├─→ T025: Keyboard drag-and-drop support
+    └─→ T025b: Keyboard accessibility testing
+
+Phase 4.5 (Auto-Scroll Handling - NEW for FR-012)
+    ├─→ T018a: Auto-scroll implementation
+    ├─→ T018b: Scroll detection in hook
+    └─→ T018c: Auto-scroll testing
+
+Phase 6 Extended (Drag Prevention + Status Change)
+    ├─→ T022: Sortable config (handle/filter)
+    ├─→ T023: Mark interactive elements
+    ├─→ T024: Manual test
+    └─→ T024a: Test drag cancellation on status change
+
 Phase 7 (Polish)
-    ├─→ T025: Keyboard accessibility
     ├─→ T026: Responsive design test
     ├─→ T027: Error handling
     ├─→ T028: Data validation
@@ -530,14 +626,17 @@ npm run dev
 
 ## Task Summary
 
-- **Total Tasks**: 32
+- **Total Tasks**: 37 (32 original + 3 auto-scroll + 1 drag cancellation test + 1 keyboard test)
 - **Setup Tasks**: 3
 - **Foundational Tasks**: 5
 - **User Story 1 Tasks**: 5
 - **User Story 3 Tasks**: 5
 - **User Story 2 Tasks**: 3
 - **User Story 4 Tasks**: 3
-- **Polish Tasks**: 8
+- **Keyboard Accessibility Tasks**: 2 (moved from Phase 7)
+- **Auto-Scroll Tasks**: 3 (NEW Phase 4.5)
+- **Drag Cancellation Test**: 1 (in Phase 6)
+- **Remaining Polish Tasks**: 7
 
 **Estimated Timeline**: 
 - Phase 1: 0.5 hours
