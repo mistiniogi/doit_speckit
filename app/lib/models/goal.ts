@@ -23,6 +23,9 @@ export interface Goal {
 
   /** ISO 8601 timestamp when goal was marked complete (null if still active) */
   completedDate: string | null
+
+  /** Position of goal within its column (0-based index per status group) */
+  order: number
 }
 
 /**
@@ -73,18 +76,12 @@ export interface GoalList {
 export function getActiveGoals(goalList: GoalList): Goal[] {
   return goalList.goals
     .filter((goal) => goal.status === 'active')
-    .sort(
-      (a, b) =>
-        new Date(b.createdDate).getTime() - new Date(a.createdDate).getTime()
-    )
+    .sort((a, b) => a.order - b.order)
 }
 
 export function getCompletedGoals(goalList: GoalList): Goal[] {
   return goalList.goals
     .filter((goal) => goal.status === 'completed')
-    .sort(
-      (a, b) =>
-        new Date(b.completedDate || '').getTime() -
-        new Date(a.completedDate || '').getTime()
+    .sort((a, b) => a.order - b.order)
     )
 }
