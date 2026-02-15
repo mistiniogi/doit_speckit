@@ -254,7 +254,7 @@ This tasks document breaks down the Goal Reordering feature into 7 implementatio
 
 ### Auto-Scroll Tasks
 
-- [ ] T018a [US1] Implement auto-scroll behavior in GoalColumn component in `app/components/goal-column.tsx`
+- [x] T018a [US1] Implement auto-scroll behavior in GoalColumn component in `app/components/goal-column.tsx`
   - Detect when dragged goal is within 50px of column top/bottom edges
   - Trigger auto-scroll with acceleration: base 10px + additional based on proximity
   - Scroll speed increases as cursor approaches edge (e.g., 5px/100ms at 50px distance, 15px/100ms at edge)
@@ -263,7 +263,7 @@ This tasks document breaks down the Goal Reordering feature into 7 implementatio
   - Stop scrolling when drag ends or cursor moves away from edge
   - File: [app/components/goal-column.tsx](app/components/goal-column.tsx)
 
-- [ ] T018b [US1] Enhance useSortableGoals hook to support edge-based scroll detection in `app/hooks/use-sortable-goals.ts`
+- [x] T018b [US1] Enhance useSortableGoals hook to support edge-based scroll detection in `app/hooks/use-sortable-goals.ts`
   - Add dragover/dragmove callback to determine cursor proximity to edges
   - Calculate onDragOver: distance from cursor to column edges
   - Trigger parent scroll action if within threshold (50px)
@@ -271,7 +271,7 @@ This tasks document breaks down the Goal Reordering feature into 7 implementatio
   - Pass scroll handler to Sortable.js config
   - File: [app/hooks/use-sortable-goals.ts](app/hooks/use-sortable-goals.ts)
 
-- [ ] T018c [US1] Test auto-scroll behavior via `npm run dev`
+- [x] T018c [US1] Test auto-scroll behavior via `npm run dev`
   - Add 15-20 goals to create scrollable column
   - Drag goal from position 1
   - Move dragged goal to within 50px of top edge → verify column scrolls up
@@ -298,18 +298,18 @@ This tasks document breaks down the Goal Reordering feature into 7 implementatio
 
 ### User Story 2 Tasks
 
-- [ ] T019 [US2] Ensure GoalOrderService handles completed goals correctly in `app/lib/services/goal-order-service.ts`
+- [x] T019 [US2] Ensure GoalOrderService handles completed goals correctly in `app/lib/services/goal-order-service.ts`
   - Verify `reorderGoalsInColumn()` works for status='completed'
   - Verify `completeGoal()` assigns correct order (max + 1) in completed group
   - Test via code review: logic is identical for both status values
 
-- [ ] T020 [US2] Verify GoalDashboard renders completed column in `app/components/goal-dashboard.tsx`
+- [x] T020 [US2] Verify GoalDashboard renders completed column in `app/components/goal-dashboard.tsx`
   - Second GoalColumn with status="completed"
   - Pass correspondingGoals (completedGoals filtered and sorted by order)
   - onReorder callback should save to localStorage
   - Status filtering should work independently per column
 
-- [ ] T021 [US2] Test completed goals reordering via `npm run dev`
+- [x] T021 [US2] Test completed goals reordering via `npm run dev`
   - Add 2-3 goals and mark them complete (checkbox)
   - Verify goals move to completed column
   - Drag goal within completed column → should reorder like active column
@@ -334,25 +334,25 @@ This tasks document breaks down the Goal Reordering feature into 7 implementatio
 
 ### User Story 4 Tasks
 
-- [ ] T022 [US4] Configure Sortable.js to exclude interactive elements in `app/hooks/use-sortable-goals.ts`
+- [x] T022 [US4] Configure Sortable.js to exclude interactive elements in `app/hooks/use-sortable-goals.ts`
   - Set `handle: '.drag-handle'` to limit drag to specific area, OR
   - Set `filter: 'button,input,a'` to exclude buttons and inputs from drag
   - Recommended: Use handle approach for explicit control
   - File: [app/hooks/use-sortable-goals.ts](app/hooks/use-sortable-goals.ts)
 
-- [ ] T023 [US4] Update GoalCard component to mark interactive elements safely in `app/components/goal-card.tsx`
+- [x] T023 [US4] Update GoalCard component to mark interactive elements safely in `app/components/goal-card.tsx`
   - Complete button: add `data-no-drag="true"` attribute
   - Delete button: add `data-no-drag="true"` attribute
   - Ensure buttons have sufficient z-index and pointer-events to catch clicks
   - Optional: Add `.drag-handle` span as placeholder for drag affordance
 
-- [ ] T024 [US4] Test interactive elements don't trigger drag via `npm run dev`
+- [x] T024 [US4] Test interactive elements don't trigger drag via `npm run dev`
   - Goal with checkbox: click and hold checkbox → checkbox toggles, no drag
   - Goal with delete button: click delete → confirmation modal appears, no drag
   - Goal title area: click and drag → drag operation initiates
   - Test mouse and touch (if device available)
 
-- [ ] T024a [FR-008] Test drag cancellation when goal status changes during drag in `npm run dev`
+- [x] T024a [FR-008] Test drag cancellation when goal status changes during drag in `npm run dev`
   - Start dragging a goal from active column
   - While dragging, use a second browser tab or DevTools to mark the goal complete
   - Verify: In-progress drag operation is cancelled automatically

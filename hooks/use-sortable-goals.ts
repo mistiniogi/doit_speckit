@@ -15,6 +15,7 @@ interface UseSortableGoalsOptions {
 /**
  * useSortableGoals: React hook for Sortable.js integration
  * Initializes Sortable instance, manages drag state, handles reordering
+ * Ensure goal items are keyboard-accessible (focusable via Tab)
  * @param options Configuration { status, goals, onReorder }
  * @returns { sortableRef, isDragging, draggedGoalId }
  */
@@ -86,6 +87,22 @@ export function useSortableGoals({
         return true
       },
     })
+
+    // Make goal items keyboard-accessible (T025)
+    // Goal items (li) are focusable via Tab key for keyboard navigation
+    // Users can Tab through goals to focus them
+    const makeAccessible = () => {
+      if (!sortableRef.current) return
+      
+      sortableRef.current.querySelectorAll('li[data-id]').forEach((item) => {
+        // Ensure each goal item is focusable (tab-accessible)
+        if (!item.getAttribute('tabindex')) {
+          item.setAttribute('tabindex', '0')
+        }
+      })
+    }
+
+    makeAccessible()
 
     // Cleanup on unmount
     return () => {
