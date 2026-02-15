@@ -3,7 +3,7 @@
 **Feature Branch**: `001-goal-tracker`  
 **Created**: 2026-02-14  
 **Status**: Draft  
-**Input**: User description: "initial page setup - this application should be a goal tracking web app called 'doit'. There should be two columns - a left one where current goals are shown, along with how many days left the user has to achieve the goal, and a right one where completed goals are. Each goal can be checked using a checkbox, and then either moved to the completed column or permanently deleted. To add new goals, a user can click on a button to open a new goal form in a modal (title and end date fields). Goals reaching their end date (within 3 days) are highlighted. Let's use a modern light theme with fun pastel colours."
+**Input**: User description: "initi al page setup - this application should be a goal tracking web app called 'doit'. There should be two columns - a left one where current goals are shown, along with how many days left the user has to achieve the goal, and a right one where completed goals are. Each goal can be checked using a checkbox, and then either moved to the completed column or permanently deleted. To add new goals, a user can click on a button to open a new goal form in a modal (title and end date fields). Goals reaching their end date (within 3 days) are highlighted. Let's use a modern light theme with fun pastel colours."
 
 ## User Scenarios *(mandatory)*
 
@@ -101,7 +101,7 @@ Clicking the delete button on any goal:
 **Acceptance Scenarios**:
 
 1. **Given** a goal is in the current column, **When** the user checks its checkbox, **Then** the goal moves to the completed column with today's date shown
-2. **Given** a goal is in the completed column, **When** the user clicks the delete button, **Then** the goal is permanently removed with visual feedback
+2. **Given** a goal is in the completed column, **When** the user clicks the delete button, **Then** a confirmation dialog appears asking "Delete this goal?" with Cancel and Confirm buttons (same as active goals); upon confirmation, the goal is permanently removed with immediate deletion from display
 3. **Given** a goal is in the left column, **When** the user clicks the delete button, **Then** a confirmation dialog appears asking "Delete this goal?" with cancel/confirm options
 4. **Given** the user confirms a deletion, **When** the action completes, **Then** the goal is removed and the layout updates smoothly
 
@@ -127,12 +127,12 @@ Clicking the delete button on any goal:
 - **FR-003**: System MUST display completed goals in the right column, separate from active goals, sorted by completion date with newest (most recently completed) goals appearing first. When no completed goals exist, the right column MUST display the empty state message: "Your completed goals will appear here."
 - **FR-004**: System MUST apply visual highlighting (color, badge, or styling change) to any goal within 3 days of its end date to indicate urgency
 - **FR-005**: Users MUST be able to click an "Add Goal" button that opens a modal form with title and end date fields
-- **FR-006**: System MUST validate the Add Goal form and prevent submission if title or end date is missing
+- **FR-006**: System MUST validate the Add Goal form and prevent submission if title or end date is missing. Validation rules: title must be 1-100 characters and non-whitespace; endDate must be a valid ISO date format (YYYY-MM-DD) and must be today or in the future
 - **FR-007**: System MUST add new goals immediately to the current goals list with correct days-remaining calculation after successful form submission
 - **FR-008**: Users MUST be able to check a checkbox on a goal to mark it complete, moving it to the completed column
 - **FR-009**: System MUST record the completion date when a goal is marked complete (today's date)
 - **FR-010**: Users MUST be able to permanently delete goals using a delete button. Deletion MUST trigger a modal confirmation dialog with the message "Delete this goal?" with Cancel and Confirm buttons. The goal is only deleted after user confirms in the modal.
-- **FR-011**: System MUST apply a modern light theme with fun pastel color scheme using Light Pastels palette (#FFE0EC pink, #E0F4FF blue, #E0FFE0 green, #F0E0FF purple) to all interface elements
+- **FR-011**: System MUST apply a modern light theme with fun pastel color scheme using Light Pastels palette (#FFE0EC pink, #E0F4FF blue, #E0FFE0 green, #F0E0FF purple) to all interface elements with the following color mapping: Active goals display with default gray background; completed goals display with pastel-pink background; goals within 3 days of deadline display with pastel-purple background (urgent); form buttons use pastel-blue; all text uses dark gray (#333333) for WCAG 2.1 Level A contrast compliance
 - **FR-012**: Interface MUST be responsive and usable across mobile (375px), tablet (768px), and desktop (1024px+) viewports
 - **FR-013**: Interface MUST meet WCAG 2.1 Level A accessibility standards including keyboard navigation, color contrast ratios, and semantic HTML
 - **FR-014**: System MUST persist goals in browser storage (localStorage or equivalent) so they remain after page refresh
@@ -158,7 +158,7 @@ Clicking the delete button on any goal:
 
 - Q: What pastel color palette should the "fun pastel colours" theme use? → A: Light Pastels - soft, desaturated colors: #FFE0EC (pink), #E0F4FF (blue), #E0FFE0 (green), #F0E0FF (purple)
 - Q: What accessibility standard (WCAG level) should the interface meet? → A: WCAG 2.1 Level A - basic accessibility with keyboard support and minimum color contrast
-- Q: What UI pattern should the delete confirmation use? → A: Modal Dialog - full-screen overlay with "Are you sure?" message and Cancel/Confirm buttons
+- Q: What UI pattern should the delete confirmation use? → A: Modal Dialog - full-screen overlay with "Delete this goal?" message and Cancel/Confirm buttons
 - Q: How should completed goals be ordered in the right column? → A: Newest First - most recently completed goals appear at the top
 - Q: What empty state messages should appear when there are no goals? → A: Current Goals: "No goals yet. Click 'Add Goal' to get started!" and Completed Goals: "Your completed goals will appear here."
 
@@ -173,7 +173,7 @@ Clicking the delete button on any goal:
 
 - **SC-001**: Users can navigate to the app and see the two-column dashboard layout fully rendered within 2 seconds on broadband connection
 - **SC-002**: A new goal can be added from empty list to dashboard with title and end date in under 30 seconds of user interaction
-- **SC-003**: Goals within 3 days of deadline are visually distinct and clearly identifiable (100% of such goals receive urgent styling)
+- **SC-003**: Goals within 3 days of deadline are visually distinct and clearly identifiable with pastel-purple background color (100% of such goals receive urgent styling)
 - **SC-004**: The app layout remains properly formatted and usable across all tested viewport sizes (mobile 375px, tablet 768px, desktop 1024px+)
 - **SC-005**: Goals persist after page refresh - no data loss during browser navigation
 - **SC-006**: Users can complete a goal with a single checkbox click action
