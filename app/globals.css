@@ -141,4 +141,33 @@
   .bg-pastel-purple {
     @apply bg-[#F0E0FF];
   }
+
+  /* Drag-and-Drop Styles */
+  .drag-handle {
+    @apply cursor-grab;
+  }
+
+  .drag-handle:active {
+    @apply cursor-grabbing;
+  }
+
+  /* Sortable.js ghost class (dragged item) */
+  .sortable-ghost {
+    @apply opacity-50;
+  }
+
+  /* Goal column container */
+  .goal-column {
+    @apply flex-1 bg-white rounded-lg shadow p-6;
+  }
+
+  /* Goal list */
+  .goal-list {
+    @apply space-y-2 list-none;
+  }
+
+  /* Drop indicator */
+  .drop-indicator {
+    @apply border-t-2 border-blue-400 my-2;
+  }
 }

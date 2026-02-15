@@ -63,6 +63,11 @@ export class GoalService {
         return null
       }
 
+      // Calculate order: max order in active goals + 1, or 0 if no active goals
+      const activeGoals = this.getActiveGoals()
+      const maxOrder = activeGoals.length > 0 ? Math.max(...activeGoals.map(g => g.order)) : -1
+      const newOrder = maxOrder + 1
+
       const goal: Goal = {
         id: uuidv4(),
         title: input.title.trim(),
@@ -70,6 +75,7 @@ export class GoalService {
         status: 'active',
         createdDate: DateService.getNowISO(),
         completedDate: null,
+        order: newOrder,
       }
 
       if (StorageService.addGoal(goal)) {

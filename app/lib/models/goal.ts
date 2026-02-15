@@ -83,5 +83,4 @@ export function getCompletedGoals(goalList: GoalList): Goal[] {
   return goalList.goals
     .filter((goal) => goal.status === 'completed')
     .sort((a, b) => a.order - b.order)
-    )
 }

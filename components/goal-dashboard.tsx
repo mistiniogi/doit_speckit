@@ -3,12 +3,27 @@
 import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { useGoals } from '@/hooks/use-goals'
+import { useGoalCrossSyncStorage } from '@/hooks/use-goal-cross-sync-storage'
 import { GoalColumn } from './goal-column'
 import { GoalFormModal } from './goal-form-modal'
+import type { Goal } from '@/lib/models/goal'
 
 export function GoalDashboard() {
   const { activeGoals, completedGoals, completeGoal, deleteGoal, addGoal } = useGoals()
   const [showModal, setShowModal] = useState(false)
+
+  // Handle reorder callback
+  const handleReorder = (_reorderedGoals: Goal[]) => {
+    // Reordering is handled by the storage service in the hook
+    // Just trigger a refresh of goals from storage
+  }
+
+  // Subscribe to cross-tab changes
+  useGoalCrossSyncStorage({
+    onGoalsChange: () => {
+      // Goals will be refreshed via the hook
+    },
+  })
 
   const handleAddGoal = (title: string, endDate: string) => {
     addGoal({ title, endDate })
@@ -32,18 +47,22 @@ export function GoalDashboard() {
           <GoalColumn
             title="Current Goals"
             goals={activeGoals}
+            status="active"
             emptyMessage="No goals yet. Click 'Add Goal' to get started!"
             onComplete={completeGoal}
             onDelete={deleteGoal}
+            onReorder={handleReorder}
           />
 
           {/* Completed Goals Column */}
           <GoalColumn
             title="Completed"
             goals={completedGoals}
+            status="completed"
             emptyMessage="Complete your first goal to see it here!"
             onComplete={completeGoal}
             onDelete={deleteGoal}
+            onReorder={handleReorder}
           />
         </div>
       </div>
